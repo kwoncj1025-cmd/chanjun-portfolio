@@ -294,6 +294,7 @@ body.modal-open {
 
 .hero h1 span {
   display: block;
+  white-space: nowrap;
 }
 
 .hero-description {
@@ -1860,6 +1861,10 @@ body.modal-open {
 
   .hero-topline .hero-contact a {
     font-size: 1rem;
+  }
+
+  .hero h1 span {
+    white-space: normal;
   }
 
   .hero-copy {
