@@ -1737,7 +1737,7 @@ body.modal-open {
 /* Narrow only the long mobile-detail images under text for specific projects. */
 .viewer.is-mobile-stack-project .viewer-stack .viewer-frame {
   width: min(760px, 72%);
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
 }
 
