@@ -32,6 +32,83 @@ const skillPreviewList = document.getElementById('skillPreviewList');
 const pageBackTop = document.getElementById('pageBackTop');
 let skillShowTimer = null;
 let skillHideTimer = null;
+const dragScrollInitialized = new WeakSet();
+
+function enableDragScroll(track) {
+  if (!track || dragScrollInitialized.has(track)) return;
+  dragScrollInitialized.add(track);
+  track.classList.add('is-draggable-scroll');
+
+  let activePointerId = null;
+  let startX = 0;
+  let startScrollLeft = 0;
+  let pointerDown = false;
+  let dragged = false;
+  let suppressClick = false;
+  const dragThreshold = 7;
+
+  const endDrag = (event) => {
+    if (!pointerDown) return;
+    if (event && activePointerId !== null && event.pointerId !== activePointerId) return;
+
+    if (dragged) {
+      suppressClick = true;
+      window.setTimeout(() => {
+        suppressClick = false;
+      }, 0);
+    }
+
+    pointerDown = false;
+    dragged = false;
+    activePointerId = null;
+    track.classList.remove('is-dragging-scroll');
+  };
+
+  track.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    if (track.scrollWidth <= track.clientWidth + 2) return;
+
+    pointerDown = true;
+    dragged = false;
+    startX = event.clientX;
+    startScrollLeft = track.scrollLeft;
+    activePointerId = event.pointerId;
+
+    track.classList.add('is-dragging-scroll');
+    track.setPointerCapture?.(activePointerId);
+  });
+
+  track.addEventListener('pointermove', (event) => {
+    if (!pointerDown || event.pointerId !== activePointerId) return;
+
+    const deltaX = event.clientX - startX;
+    if (!dragged && Math.abs(deltaX) >= dragThreshold) {
+      dragged = true;
+    }
+
+    if (!dragged) return;
+    track.scrollLeft = startScrollLeft - deltaX;
+    event.preventDefault();
+  });
+
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+  track.addEventListener('pointerleave', (event) => {
+    if (event.pointerType === 'mouse') {
+      endDrag(event);
+    }
+  });
+
+  track.addEventListener('dragstart', (event) => {
+    event.preventDefault();
+  });
+
+  track.addEventListener('click', (event) => {
+    if (!suppressClick) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
+}
 
 function clearSkillTimers() {
   if (skillShowTimer) {
@@ -242,6 +319,7 @@ function refreshCarouselById(trackId) {
 
 if (carouselTracks.length > 0) {
   carouselTracks.forEach((track) => {
+    enableDragScroll(track);
     if (!track.id) return;
 
     const { prev, next } = findCarouselControls(track.id);
@@ -263,6 +341,8 @@ if (carouselTracks.length > 0) {
     carouselTracks.forEach((track) => refreshCarouselButtons(track));
   });
 }
+
+enableDragScroll(skillsGrid);
 
 projectFilterButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -533,6 +613,7 @@ function renderViewerRelated(detail) {
     viewerRelatedScrollState[relatedKey] = track.scrollLeft;
   }, { passive: true });
 
+  enableDragScroll(track);
   viewerRelated.appendChild(track);
 
   requestAnimationFrame(() => {

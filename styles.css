@@ -678,6 +678,20 @@ body.modal-open {
   display: none;
 }
 
+.is-draggable-scroll {
+  cursor: grab;
+}
+
+.is-draggable-scroll.is-dragging-scroll {
+  cursor: grabbing;
+  user-select: none;
+  scroll-behavior: auto;
+}
+
+.is-draggable-scroll.is-dragging-scroll * {
+  user-select: none;
+}
+
 .carousel-arrow {
   width: 34px;
   height: 34px;
