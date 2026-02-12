@@ -17,8 +17,6 @@
 
 html {
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
 }
 
 body {
@@ -121,9 +119,9 @@ body.modal-open {
 }
 
 .container {
-  width: min(1360px, calc(100vw - clamp(2rem, 6vw, 7.2rem)));
+  width: min(1120px, 92vw);
   margin: 0 auto;
-  padding: 1.4rem 0 5rem;
+  padding: 1.2rem 0 5rem;
 }
 
 .hero {
@@ -143,7 +141,6 @@ body.modal-open {
   flex-direction: column;
   align-items: flex-start;
   padding-top: clamp(0.6rem, 1.6vw, 1.2rem);
-  max-width: 100%;
   min-width: 0;
 }
 
@@ -290,8 +287,8 @@ body.modal-open {
 .hero h1 {
   margin: 0;
   font-family: "Satoshi", sans-serif;
-  font-size: clamp(2.45rem, 3.1vw, 3.66rem);
-  line-height: 1.16;
+  font-size: clamp(1.9rem, 3.8vw, 2.95rem);
+  line-height: 1.18;
   letter-spacing: -0.01em;
 }
 
@@ -301,17 +298,14 @@ body.modal-open {
 }
 
 .hero-description {
-  max-width: 100%;
+  max-width: min(100%, 96ch);
   color: var(--ink-sub);
-  font-size: clamp(1.02rem, 1.1vw, 1.18rem);
-  line-height: 1.58;
   margin: 1.2rem 0 0.68rem;
 }
 
 .hero-description-line {
   display: block;
   white-space: nowrap;
-  word-break: keep-all;
 }
 
 .hero-tags {
@@ -392,31 +386,11 @@ body.modal-open {
 .about-copy {
   display: block;
   align-self: end;
-  max-width: 100%;
   min-width: 0;
 }
 
 .about-copy p {
   margin: 0;
-}
-
-.about-description {
-  display: grid;
-  gap: 0.22rem;
-  color: var(--ink-sub);
-  font-size: clamp(1rem, 1.06vw, 1.12rem);
-  line-height: 1.72;
-}
-
-.about-description-line {
-  display: block;
-  white-space: nowrap;
-  word-break: keep-all;
-}
-
-.about-description-gap {
-  display: block;
-  height: 0.34rem;
 }
 
 .about-tags {
@@ -1800,13 +1774,6 @@ body.modal-open {
   transform: translateY(0);
 }
 
-@media (max-width: 1320px) {
-  .hero-description-line,
-  .about-description-line {
-    white-space: normal;
-  }
-}
-
 @media (hover: none), (pointer: coarse) {
   .skills-grid {
     display: flex;
@@ -1909,12 +1876,6 @@ body.modal-open {
     white-space: normal;
   }
 
-  .hero-description {
-    font-size: 1rem;
-    line-height: 1.62;
-    margin-top: 0.98rem;
-  }
-
   .hero-copy {
     padding-top: 0;
   }
@@ -1927,20 +1888,6 @@ body.modal-open {
 
   .about-copy {
     align-self: auto;
-  }
-
-  .about-description {
-    gap: 0.36rem;
-    font-size: 0.98rem;
-    line-height: 1.72;
-  }
-
-  .about-description-line {
-    white-space: normal;
-  }
-
-  .about-description-gap {
-    height: 0.2rem;
   }
 
   .about-visual {
@@ -2091,8 +2038,7 @@ body.modal-open {
   }
 
   .container {
-    width: min(1120px, 94vw);
-    padding: 1.05rem 0 4rem;
+    width: min(1120px, 93.5vw);
   }
 
   .about-visual {
@@ -2101,16 +2047,6 @@ body.modal-open {
 
   .hero-layout {
     gap: 0.95rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.02rem, 8.4vw, 2.9rem);
-    line-height: 1.17;
-  }
-
-  .hero-description {
-    font-size: 0.96rem;
-    line-height: 1.66;
   }
 
   .hero-proof-list {
@@ -2167,64 +2103,5 @@ body.modal-open {
 
   .viewer.is-cover-letter .viewer-cover img {
     height: auto;
-  }
-}
-
-@media (max-width: 560px) {
-  .site-header {
-    padding: 0.72rem 0.8rem;
-  }
-
-  .brand {
-    font-size: 0.95rem;
-  }
-
-  .site-nav {
-    max-width: calc(100vw - 132px);
-    gap: 0.52rem;
-  }
-
-  .site-nav a,
-  .site-nav-intro {
-    font-size: 0.86rem;
-  }
-
-  .hero-topline {
-    gap: 0.42rem;
-  }
-
-  .contact-icon-link {
-    width: 46px;
-    height: 46px;
-  }
-
-  .contact-icon-link svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .hero h1 {
-    font-size: clamp(1.8rem, 9.2vw, 2.34rem);
-    line-height: 1.19;
-  }
-
-  .hero-description {
-    margin-top: 0.84rem;
-  }
-
-  .about-description {
-    font-size: 0.95rem;
-    line-height: 1.72;
-  }
-}
-
-@media (min-width: 1680px) {
-  .container {
-    width: min(1420px, calc(100vw - 120px));
-  }
-
-  .hero-layout {
-    grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.74fr);
-    gap: 3.1rem;
   }
 }
