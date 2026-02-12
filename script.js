@@ -788,7 +788,7 @@ function normalizeLines(lines, category = '') {
 function createParagraph(text) {
   const p = document.createElement('p');
   p.className = 'viewer-text-line';
-  p.textContent = text;
+  appendMultilineText(p, text);
   return p;
 }
 
@@ -1210,6 +1210,17 @@ function normalizeChipText(text = '') {
     .trim();
 }
 
+function appendMultilineText(node, text) {
+  const value = String(text || '');
+  const lines = value.split('\n');
+  lines.forEach((line, idx) => {
+    if (idx > 0) {
+      node.appendChild(document.createElement('br'));
+    }
+    node.appendChild(document.createTextNode(line));
+  });
+}
+
 function createDirectionItem(label, description) {
   const item = document.createElement('p');
   item.className = 'viewer-direction-item';
@@ -1220,7 +1231,15 @@ function createDirectionItem(label, description) {
   item.appendChild(itemLabel);
 
   if (description) {
-    item.appendChild(document.createTextNode(` ${description}`));
+    const fragments = String(description).split('\n');
+    fragments.forEach((fragment, index) => {
+      if (index === 0) {
+        item.appendChild(document.createTextNode(` ${fragment}`));
+      } else {
+        item.appendChild(document.createElement('br'));
+        item.appendChild(document.createTextNode(fragment));
+      }
+    });
   }
 
   return item;
@@ -1630,7 +1649,7 @@ function renderProjectRichFromBlocks(detail) {
         if (stepItems.length === 1) {
           const sentence = document.createElement('p');
           sentence.className = 'viewer-flow-sentence';
-          sentence.textContent = stepItems[0];
+          appendMultilineText(sentence, stepItems[0]);
           section.appendChild(sentence);
         } else {
           const shortFlow = stepItems.length <= 6 && stepItems.every((text) => text.length <= 28);
@@ -1669,7 +1688,15 @@ function renderProjectRichFromBlocks(detail) {
           key.className = 'viewer-flow-key';
           key.textContent = `${entry.label}:`;
           line.appendChild(key);
-          line.appendChild(document.createTextNode(` ${entry.detail}`));
+          const detailFragments = String(entry.detail || '').split('\n');
+          detailFragments.forEach((fragment, index) => {
+            if (index === 0) {
+              line.appendChild(document.createTextNode(` ${fragment}`));
+            } else {
+              line.appendChild(document.createElement('br'));
+              line.appendChild(document.createTextNode(fragment));
+            }
+          });
 
           pairList.appendChild(line);
         });
