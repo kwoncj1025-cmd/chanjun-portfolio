@@ -1734,6 +1734,19 @@ body.modal-open {
   gap: 0.9rem;
 }
 
+/* Narrow only the long mobile-detail images under text for specific projects. */
+.viewer.is-mobile-stack-project .viewer-stack .viewer-frame {
+  width: min(760px, 72%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 980px) {
+  .viewer.is-mobile-stack-project .viewer-stack .viewer-frame {
+    width: 100%;
+  }
+}
+
 .viewer-bottom-actions {
   width: var(--viewer-content-width);
   margin: 1rem auto 0;

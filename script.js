@@ -513,6 +513,7 @@ let activeTrigger = null;
 const viewerRelatedScrollState = { project: 0, career: 0 };
 let viewerRelatedPendingShift = null;
 const CONTACT_PHONE_HREF = 'tel:+821063434110';
+const NARROW_MOBILE_STACK_PROJECT_IDS = new Set(['whipped-renewal', 'sirloin-renewal', 'toss-tovi']);
 
 function getTrackGap(track) {
   if (!track) return 0;
@@ -1755,6 +1756,7 @@ function renderViewer(detail, fallback = {}) {
   viewerTitle.textContent = title;
   viewerSource.href = CONTACT_PHONE_HREF;
   viewer.classList.toggle('is-cover-letter', detail?.id === 'intro-essay');
+  viewer.classList.toggle('is-mobile-stack-project', NARROW_MOBILE_STACK_PROJECT_IDS.has(detail?.id));
 
   renderViewerRelated(detail);
 
