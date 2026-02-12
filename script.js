@@ -1404,7 +1404,7 @@ function renderProjectRichFromBlocks(detail) {
         section.appendChild(list);
       }
       const li = document.createElement('li');
-      li.textContent = block.text || '';
+      appendMultilineText(li, block.text || '');
       list.appendChild(li);
       return;
     }
@@ -1418,7 +1418,7 @@ function renderProjectRichFromBlocks(detail) {
         section.appendChild(list);
       }
       const li = document.createElement('li');
-      li.textContent = block.text || '';
+      appendMultilineText(li, block.text || '');
       list.appendChild(li);
       return;
     }
