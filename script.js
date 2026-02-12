@@ -44,23 +44,32 @@ function enableDragScroll(track) {
   let startScrollLeft = 0;
   let pointerDown = false;
   let dragged = false;
-  let suppressClick = false;
+  let pendingDeltaX = 0;
+  let clickBlockUntil = 0;
+  let dragFrame = 0;
   const dragThreshold = 7;
 
-  const endDrag = (event) => {
+  const applyDragFrame = () => {
+    track.scrollLeft = startScrollLeft - pendingDeltaX;
+    dragFrame = 0;
+  };
+
+  const endDrag = (event, force = false) => {
     if (!pointerDown) return;
-    if (event && activePointerId !== null && event.pointerId !== activePointerId) return;
+    if (!force && event && activePointerId !== null && event.pointerId !== activePointerId) return;
 
     if (dragged) {
-      suppressClick = true;
-      window.setTimeout(() => {
-        suppressClick = false;
-      }, 0);
+      clickBlockUntil = performance.now() + 180;
     }
 
     pointerDown = false;
     dragged = false;
     activePointerId = null;
+    pendingDeltaX = 0;
+    if (dragFrame) {
+      window.cancelAnimationFrame(dragFrame);
+      dragFrame = 0;
+    }
     track.classList.remove('is-dragging-scroll');
   };
 
@@ -73,9 +82,7 @@ function enableDragScroll(track) {
     startX = event.clientX;
     startScrollLeft = track.scrollLeft;
     activePointerId = event.pointerId;
-
-    track.classList.add('is-dragging-scroll');
-    track.setPointerCapture?.(activePointerId);
+    pendingDeltaX = 0;
   });
 
   track.addEventListener('pointermove', (event) => {
@@ -84,18 +91,22 @@ function enableDragScroll(track) {
     const deltaX = event.clientX - startX;
     if (!dragged && Math.abs(deltaX) >= dragThreshold) {
       dragged = true;
+      track.classList.add('is-dragging-scroll');
     }
 
     if (!dragged) return;
-    track.scrollLeft = startScrollLeft - deltaX;
+    pendingDeltaX = deltaX;
+    if (!dragFrame) {
+      dragFrame = window.requestAnimationFrame(applyDragFrame);
+    }
     event.preventDefault();
   });
 
   track.addEventListener('pointerup', endDrag);
-  track.addEventListener('pointercancel', endDrag);
+  track.addEventListener('pointercancel', (event) => endDrag(event, true));
   track.addEventListener('pointerleave', (event) => {
-    if (event.pointerType === 'mouse') {
-      endDrag(event);
+    if (event.pointerType === 'mouse' && pointerDown) {
+      endDrag(event, true);
     }
   });
 
@@ -104,7 +115,7 @@ function enableDragScroll(track) {
   });
 
   track.addEventListener('click', (event) => {
-    if (!suppressClick) return;
+    if (performance.now() >= clickBlockUntil) return;
     event.preventDefault();
     event.stopPropagation();
   }, true);
