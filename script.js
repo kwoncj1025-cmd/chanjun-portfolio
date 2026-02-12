@@ -409,6 +409,7 @@ const QUIET_LAB_RICH = {
       title: 'Problem Definition',
       paragraphs: ['이 문제를 취향이나 라이프스타일의 문제가 아닌 감각 구조의 붕괴 상태로 정의'],
       table: {
+        compact: true,
         headers: ['시대적 문제', '관점'],
         rows: [
           ['정보 과잉', '선택과 판단 피로 누적'],
@@ -441,6 +442,7 @@ const QUIET_LAB_RICH = {
     {
       title: 'Positioning Strategy',
       table: {
+        compact: true,
         headers: ['구분', '일반 브랜드', 'QUIET LAB'],
         rows: [
           ['중심', '취향·디자인', '감각 회복'],
@@ -460,6 +462,7 @@ const QUIET_LAB_RICH = {
     {
       title: 'Visual Strategy',
       table: {
+        compact: true,
         headers: ['요소', '설계 의도'],
         rows: [
           ['이미지', '단일 오브젝트 중심'],
@@ -792,6 +795,9 @@ function createParagraph(text) {
 function createTable(table) {
   const t = document.createElement('table');
   t.className = 'viewer-rich-table';
+  if (table?.compact) {
+    t.classList.add('viewer-rich-table--compact');
+  }
 
   const thead = document.createElement('thead');
   const trh = document.createElement('tr');

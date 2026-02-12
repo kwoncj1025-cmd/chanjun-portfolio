@@ -1473,6 +1473,7 @@ body.modal-open {
   font-size: 0.94rem;
   line-height: 1.6;
   font-weight: 430;
+  white-space: pre-line;
 }
 
 .viewer-text-line strong {
@@ -1551,6 +1552,7 @@ body.modal-open {
   line-height: 1.6;
   color: var(--ink-sub);
   font-weight: 460;
+  white-space: pre-line;
 }
 
 .viewer-rich-project-section h3 + .viewer-direction-item {
@@ -1631,6 +1633,7 @@ body.modal-open {
   font-size: 0.96rem;
   line-height: 1.62;
   font-weight: 470;
+  white-space: pre-line;
 }
 
 .viewer-flow-item {
@@ -1673,6 +1676,7 @@ body.modal-open {
   font-size: 0.95rem;
   line-height: 1.62;
   font-weight: 450;
+  white-space: pre-line;
 }
 
 .viewer-flow-key {
@@ -1799,6 +1803,13 @@ body.modal-open {
   table-layout: fixed;
   margin-top: 0.5rem;
   font-size: 0.9rem;
+}
+
+.viewer-rich-table.viewer-rich-table--compact {
+  width: fit-content;
+  min-width: min(560px, 100%);
+  max-width: min(760px, 100%);
+  table-layout: auto;
 }
 
 .viewer-rich-table th,
