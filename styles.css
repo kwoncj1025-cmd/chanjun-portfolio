@@ -275,6 +275,7 @@ body.modal-open {
 .hero-role {
   display: grid;
   gap: 0.24rem;
+  padding-left: clamp(4px, 0.45vw, 8px);
 }
 
 .eyebrow-en {
@@ -1901,6 +1902,10 @@ body.modal-open {
     width: 100%;
     align-items: flex-start;
     gap: 0.46rem;
+  }
+
+  .hero-role {
+    padding-left: 2px;
   }
 
   .hero-topline .hero-contact a {
