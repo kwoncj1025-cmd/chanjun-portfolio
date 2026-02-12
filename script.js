@@ -1,5 +1,10 @@
 const revealTargets = document.querySelectorAll('.reveal');
 
+const platformHint = navigator.userAgentData?.platform || navigator.platform || navigator.userAgent;
+if (/win/i.test(platformHint)) {
+  document.body.classList.add('platform-windows');
+}
+
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {

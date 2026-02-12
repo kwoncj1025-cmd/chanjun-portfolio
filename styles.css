@@ -162,6 +162,16 @@ body.modal-open {
   color: var(--ink-sub);
 }
 
+@media (min-width: 981px) {
+  body.platform-windows .hero-layout {
+    gap: clamp(2.45rem, 5.2vw, 4.7rem);
+  }
+
+  body.platform-windows .hero-side {
+    padding-left: clamp(1.55rem, 3.4vw, 3.05rem);
+  }
+}
+
 .hero-proof {
   padding-left: 0.86rem;
   border-left: 1px solid rgba(101, 110, 126, 0.24);
