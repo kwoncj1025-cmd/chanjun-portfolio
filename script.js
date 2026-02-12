@@ -1756,6 +1756,7 @@ function renderViewer(detail, fallback = {}) {
   viewerTitle.textContent = title;
   viewerSource.href = CONTACT_PHONE_HREF;
   viewer.classList.toggle('is-cover-letter', detail?.id === 'intro-essay');
+  viewer.classList.toggle('is-career-detail', detail?.kind === 'career');
   viewer.classList.toggle('is-mobile-stack-project', NARROW_MOBILE_STACK_PROJECT_IDS.has(detail?.id));
 
   renderViewerRelated(detail);
