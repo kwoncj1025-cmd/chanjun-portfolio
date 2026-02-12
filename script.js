@@ -513,7 +513,83 @@ let activeTrigger = null;
 const viewerRelatedScrollState = { project: 0, career: 0 };
 let viewerRelatedPendingShift = null;
 const CONTACT_PHONE_HREF = 'tel:+821063434110';
+const CONTACT_PHONE_TEXT = '+82 10 6343 4110';
+const CONTACT_PHONE_DIGITS = '+821063434110';
+const CONTACT_EMAIL = 'kwoncj1025@gmail.com';
+const CONTACT_EMAIL_WEB = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL)}`;
 const NARROW_MOBILE_STACK_PROJECT_IDS = new Set(['whipped-renewal', 'sirloin-renewal', 'toss-tovi']);
+
+function showContactToast(message) {
+  if (!message) return;
+
+  const existing = document.querySelector('.contact-toast');
+  if (existing) {
+    existing.remove();
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'contact-toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.classList.add('is-visible');
+  });
+
+  window.setTimeout(() => {
+    toast.classList.remove('is-visible');
+    window.setTimeout(() => toast.remove(), 240);
+  }, 1800);
+}
+
+async function copyText(text) {
+  const value = String(text || '').trim();
+  if (!value) return false;
+
+  try {
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch (error) {
+    const input = document.createElement('textarea');
+    input.value = value;
+    input.setAttribute('readonly', 'true');
+    input.style.position = 'fixed';
+    input.style.top = '-9999px';
+    input.style.left = '-9999px';
+    document.body.appendChild(input);
+    input.select();
+    const copied = document.execCommand('copy');
+    input.remove();
+    return Boolean(copied);
+  }
+}
+
+function initWindowsContactFallback() {
+  if (!document.body.classList.contains('platform-windows')) return;
+
+  const mailLinks = document.querySelectorAll('a[href^="mailto:"]');
+  mailLinks.forEach((link) => {
+    link.setAttribute('href', CONTACT_EMAIL_WEB);
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  });
+
+  const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+  phoneLinks.forEach((link) => {
+    if (link.dataset.phoneFallbackBound === '1') return;
+    link.dataset.phoneFallbackBound = '1';
+
+    link.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const copied = await copyText(CONTACT_PHONE_DIGITS);
+      showContactToast(
+        copied
+          ? `전화번호가 복사되었습니다: ${CONTACT_PHONE_TEXT}`
+          : `전화번호: ${CONTACT_PHONE_TEXT}`,
+      );
+    });
+  });
+}
 
 function getTrackGap(track) {
   if (!track) return 0;
@@ -1903,3 +1979,5 @@ const year = document.getElementById('year');
 if (year) {
   year.textContent = String(new Date().getFullYear());
 }
+
+initWindowsContactFallback();
