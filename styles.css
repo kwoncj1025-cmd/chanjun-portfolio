@@ -303,6 +303,11 @@ body.modal-open {
   margin: 1.2rem 0 0.68rem;
 }
 
+.hero-description-line {
+  display: block;
+  white-space: nowrap;
+}
+
 .hero-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1864,6 +1869,10 @@ body.modal-open {
   }
 
   .hero h1 span {
+    white-space: normal;
+  }
+
+  .hero-description-line {
     white-space: normal;
   }
 
