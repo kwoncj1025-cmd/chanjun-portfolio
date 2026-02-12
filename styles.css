@@ -1261,7 +1261,7 @@ body.modal-open {
 
 .viewer.is-career-detail .viewer-cover {
   width: min(560px, 50%);
-  margin: 0 auto 0.9rem;
+  margin: 0 auto 0.9rem 0;
 }
 
 .viewer.is-cover-letter .viewer-cover {
@@ -1291,6 +1291,7 @@ body.modal-open {
 @media (max-width: 980px) {
   .viewer.is-career-detail .viewer-cover {
     width: min(560px, 86%);
+    margin: 0 auto 0.9rem 0;
   }
 }
 
