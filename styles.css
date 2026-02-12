@@ -25,6 +25,7 @@ body {
   color: var(--ink);
   background: var(--bg);
   line-height: 1.62;
+  letter-spacing: -0.025em;
   overflow-x: hidden;
 }
 
@@ -133,7 +134,7 @@ body.modal-open {
   display: grid;
   grid-template-columns: minmax(0, 1.06fr) minmax(300px, 0.74fr);
   align-items: start;
-  gap: clamp(1.4rem, 3vw, 2.8rem);
+  gap: clamp(2rem, 4.1vw, 3.8rem);
 }
 
 .hero-copy {
@@ -149,7 +150,7 @@ body.modal-open {
   display: grid;
   gap: 1.25rem;
   padding-top: 0.34rem;
-  padding-left: clamp(0.55rem, 1.4vw, 1.25rem);
+  padding-left: clamp(1.1rem, 2.7vw, 2.35rem);
 }
 
 .hero-side-kicker {
