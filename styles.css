@@ -1284,6 +1284,9 @@ body.modal-open {
 }
 
 .viewer.is-cover-letter .viewer-cover img {
+  aspect-ratio: 11 / 5;
+  object-fit: cover;
+  object-position: center;
   height: auto;
 }
 
